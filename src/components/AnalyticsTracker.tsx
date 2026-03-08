@@ -3,6 +3,16 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
+declare global {
+  interface Window {
+    gtag: (
+      command: string,
+      targetId: string,
+      config?: Record<string, any>
+    ) => void;
+  }
+}
+
 export default function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
