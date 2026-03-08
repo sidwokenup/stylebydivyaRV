@@ -69,7 +69,7 @@ export const products: Product[] = [
     ]
   },
   {
-    id: "divya's-versatile-brown-wrap-dress",
+    id: "divyas-versatile-brown-wrap-dress",
     name: "Divya's Versatile Brown Wrap Dress",
     collection: "wrapstyles",
     price: 7499,

@@ -10,7 +10,7 @@ const TRENDING_IDS = [
   "the-valentina-top",
   "noor-e-ruhani",
   "the-odyssey-drape-skirt",
-  "divya's-brown-wrap-dress"
+  "divyas-versatile-brown-wrap-dress"
 ];
 
 // Filter products based on the IDs and preserve the order
