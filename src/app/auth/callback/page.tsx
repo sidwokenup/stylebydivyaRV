@@ -30,7 +30,9 @@ function CallbackContent() {
           }
 
           // Successful login
-          router.push("/shop");
+          // Check for 'next' param, otherwise default to '/shop'
+          const next = searchParams.get("next") ?? "/shop";
+          router.push(next);
         } catch (err) {
           console.error("Callback handling error:", err);
           router.push("/shop");
