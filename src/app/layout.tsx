@@ -4,6 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import { AuthModalProvider } from "@/context/AuthModalContext";
+import { AuthUserProvider } from "@/context/AuthUserContext";
+import AuthModal from "@/components/auth/AuthModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -120,10 +123,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Suspense fallback={null}>
-          <AnalyticsTracker />
-        </Suspense>
-        {children}
+        <AuthUserProvider>
+          <AuthModalProvider>
+            <Suspense fallback={null}>
+              <AnalyticsTracker />
+            </Suspense>
+            <AuthModal />
+            {children}
+          </AuthModalProvider>
+        </AuthUserProvider>
       </body>
     </html>
   );

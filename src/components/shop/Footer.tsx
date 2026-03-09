@@ -43,7 +43,7 @@ export default function Footer() {
               </div>
             </a>
             {/* Instagram */}
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 group">
+            <a href="https://instagram.com/_stylebydivya" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 group">
               <span className="sr-only">Instagram</span>
               <div className="relative w-5 h-5">
                 <Image 

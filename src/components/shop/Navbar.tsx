@@ -3,9 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuthModal } from "@/context/AuthModalContext";
+import { useAuthUser } from "@/context/AuthUserContext";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { openLogin } = useAuthModal();
+  const { user, signOut } = useAuthUser();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   // Toggle function for mobile menu
   const toggleMobileMenu = () => {
@@ -72,12 +77,57 @@ export default function Navbar() {
 
           {/* Right: Icons */}
           <div className="flex items-center gap-6 z-50">
-            <Link 
-              href="/login" 
-              className="hidden md:block hover:text-[#D4AF37] transition-colors duration-300 text-sm font-medium tracking-wide uppercase"
-            >
-              Login
-            </Link>
+            {user ? (
+              <div className="relative hidden md:block">
+                <button
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                  className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors duration-300"
+                >
+                  <span className="text-sm font-medium tracking-wide uppercase">
+                    {user.user_metadata?.full_name?.split(" ")[0] || "Profile"}
+                  </span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                    />
+                  </svg>
+                </button>
+
+                <AnimatePresence>
+                  {isProfileMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-sm py-2 border border-gray-100"
+                    >
+                      <button
+                        onClick={signOut}
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 hover:text-[#D4AF37] transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <button
+                onClick={openLogin}
+                className="hidden md:block hover:text-[#D4AF37] transition-colors duration-300 text-sm font-medium tracking-wide uppercase"
+              >
+                Login
+              </button>
+            )}
             
             <button 
               className="group relative hover:text-[#D4AF37] transition-colors duration-300" 
@@ -155,13 +205,32 @@ export default function Navbar() {
                   </Link>
                 ))}
                 
-                <Link
-                  href="/login"
-                  onClick={toggleMobileMenu}
-                  className="text-lg font-medium uppercase tracking-widest text-gray-400 hover:text-[#D4AF37] transition-colors duration-300 mt-4"
-                >
-                  Login / Signup
-                </Link>
+                {user ? (
+                  <>
+                    <div className="text-lg font-medium uppercase tracking-widest text-white mt-4 pb-2 border-b border-white/10">
+                      Hi, {user.user_metadata?.full_name?.split(" ")[0] || "User"}
+                    </div>
+                    <button
+                      onClick={() => {
+                        signOut();
+                        toggleMobileMenu();
+                      }}
+                      className="text-lg font-medium uppercase tracking-widest text-gray-400 hover:text-[#D4AF37] transition-colors duration-300 mt-4 text-left"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      toggleMobileMenu();
+                      openLogin();
+                    }}
+                    className="text-lg font-medium uppercase tracking-widest text-gray-400 hover:text-[#D4AF37] transition-colors duration-300 mt-4 text-left"
+                  >
+                    Login / Signup
+                  </button>
+                )}
               </div>
               
               {/* Drawer Footer info */}
