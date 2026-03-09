@@ -31,15 +31,16 @@ function CallbackContent() {
 
           // Successful login
           // Check for 'next' param, otherwise default to '/shop'
-          const next = searchParams.get("next") ?? "/shop";
-          router.push(next);
+          const nextParam = searchParams.get("next");
+          const next = nextParam && nextParam.startsWith("/") ? nextParam : "/shop";
+          router.replace(next);
         } catch (err) {
           console.error("Callback handling error:", err);
-          router.push("/shop");
+          router.replace("/shop");
         }
       } else {
         // No code, just redirect
-        router.push("/shop");
+        router.replace("/shop");
       }
     };
 
