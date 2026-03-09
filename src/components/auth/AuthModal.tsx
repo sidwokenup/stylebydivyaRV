@@ -72,7 +72,7 @@ export default function AuthModal() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/shop`,
         },
       });
       if (error) throw error;
