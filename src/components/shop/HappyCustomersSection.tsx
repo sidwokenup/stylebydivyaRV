@@ -24,7 +24,7 @@ export default function HappyCustomersSection() {
               <div className="w-full md:w-1/2 flex-shrink-0">
                 <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-lg overflow-hidden shadow-md">
                   <Image
-                    src="/assets/customers/chetna.jpg"
+                    src={HAPPY_CUSTOMERS[0].image}
                     alt={HAPPY_CUSTOMERS[0].name}
                     fill
                     className="object-cover"
