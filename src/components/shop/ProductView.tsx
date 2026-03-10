@@ -10,7 +10,7 @@ import ProductAccordion from "@/components/ProductAccordion";
 import Link from "next/link";
 
 // Company WhatsApp Number (International format without +)
-const WHATSAPP_NUMBER = "919813484649";
+const WHATSAPP_NUMBER = "918708461553";
 
 function slugify(value: string) {
   return value

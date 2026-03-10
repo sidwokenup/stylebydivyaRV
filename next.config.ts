@@ -4,6 +4,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
   // Explicitly disable turbopack by not providing it or forcing webpack if needed, 
   // but better to just use webpack config and run with --webpack if next 16 defaults to turbo.

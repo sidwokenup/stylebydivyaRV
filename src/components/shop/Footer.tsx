@@ -13,7 +13,7 @@ export default function Footer() {
           <h3 className="text-xl font-serif tracking-widest text-yellow-500">StyleByDivya</h3>
           <address className="not-italic text-sm text-gray-400 leading-relaxed">
             New Delhi, India<br />
-            Phone: <a href="tel:9813484649" className="hover:text-yellow-500 transition-colors">9813484649</a>
+            Phone: <a href="tel:+918708461553" className="hover:text-yellow-500 transition-colors">+91 8708461553</a>
           </address>
         </div>
 
@@ -21,8 +21,10 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h4 className="text-sm font-medium uppercase tracking-wider text-gray-300">Information</h4>
           <nav className="flex flex-col gap-2 text-sm text-gray-400">
-            <Link href="/terms" className="hover:text-yellow-500 transition-colors">Terms & Conditions</Link>
-            <Link href="/privacy" className="hover:text-yellow-500 transition-colors">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-yellow-500 transition-colors">Terms & Conditions</Link>
+            <Link href="/privacy-policy" className="hover:text-yellow-500 transition-colors">Privacy Policy</Link>
+            <Link href="/return-policy" className="hover:text-yellow-500 transition-colors">Return & Refund Policy</Link>
+            <Link href="/shipping-policy" className="hover:text-yellow-500 transition-colors">Shipping Policy</Link>
             <Link href="/#about" className="hover:text-yellow-500 transition-colors">About Us</Link>
           </nav>
         </div>
@@ -32,7 +34,7 @@ export default function Footer() {
           <h4 className="text-sm font-medium uppercase tracking-wider text-gray-300">Connect</h4>
           <div className="flex gap-6">
             {/* WhatsApp */}
-            <a href="https://wa.me/919813484649" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 group">
+            <a href="https://wa.me/918708461553" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 group">
               <span className="sr-only">WhatsApp</span>
               <div className="relative w-5 h-5">
                 <Image 

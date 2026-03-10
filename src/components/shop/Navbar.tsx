@@ -45,6 +45,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "HOME", href: "/" },
     { name: "COLLECTION", href: "/shop" },
+    { name: "SAREE REVIVAL", href: "/saree-revival" },
     { name: "ABOUT", href: "/#about" },
     { name: "TRENDING", href: "#trending" },
   ];
