@@ -8,6 +8,7 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Product, getProductsByCollection } from "@/lib/products";
 import ProductAccordion from "@/components/ProductAccordion";
 import Link from "next/link";
+import AddToCartButton from "@/components/shop/AddToCartButton";
 
 // Company WhatsApp Number (International format without +)
 const WHATSAPP_NUMBER = "918708461553";
@@ -297,9 +298,7 @@ export default function ProductView({ product }: ProductViewProps) {
 
                 {/* CTA Buttons */}
                 <div className="space-y-3 pt-4">
-                  <button className="w-full py-4 bg-black text-white font-medium uppercase tracking-widest hover:bg-gray-900 transition-colors">
-                    Add to Cart
-                  </button>
+                  <AddToCartButton product={product} />
                   <button 
                     onClick={handleBuyNow}
                     className="w-full py-4 border border-[#C6A756] text-black font-medium uppercase tracking-widest hover:bg-[#C6A756] hover:text-white transition-colors"

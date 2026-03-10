@@ -81,11 +81,7 @@ export default function HeroVideo() {
           className="absolute inset-0 w-full h-full object-cover"
           // We will use a placeholder src initially or handled via imports below
         >
-             {/* 
-                Since I cannot be 100% sure if import works without testing, 
-                I will assume I need to import these assets. 
-             */}
-             <source src={isMobile ? require("@/assets/Main_screenVideo-1/mobile_introvideo.mp4").default : require("@/assets/Main_screenVideo-1/desktop_introvideo.mp4").default} type="video/mp4" />
+             <source src={isMobile ? "/videos/mobile_intro_v2.mp4" : "/videos/desktop_introvideo.mp4?v=1"} type="video/mp4" />
              Your browser does not support the video tag.
         </video>
         

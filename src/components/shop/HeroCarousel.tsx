@@ -23,7 +23,7 @@ const SLIDES = [
     title: "Luxury Redefined",
     subtitle: "Discover timeless elegance",
     cta: "Shop Now",
-    link: "#collection",
+    link: "#trending",
   },
   {
     id: 2,
@@ -136,7 +136,7 @@ export default function HeroCarousel() {
               src={isMobile ? SLIDES[activeIndex].mobileImage : SLIDES[activeIndex].desktopImage}
               alt={SLIDES[activeIndex].title}
               fill
-              className="object-cover pointer-events-none"
+              className="object-cover object-[center_20%] md:object-top pointer-events-none scale-125"
               priority
               sizes="(max-width: 768px) 100vw, 100vw"
             />

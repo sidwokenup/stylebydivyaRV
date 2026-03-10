@@ -5,11 +5,13 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthModal } from "@/context/AuthModalContext";
 import { useAuthUser } from "@/context/AuthUserContext";
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { openLogin } = useAuthModal();
   const { user, signOut } = useAuthUser();
+  const { getCartCount, toggleCart } = useCart();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   // Toggle function for mobile menu
@@ -44,7 +46,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "HOME", href: "/" },
-    { name: "COLLECTION", href: "/shop" },
+    { name: "COLLECTION", href: "/shop#collection" },
     { name: "SAREE REVIVAL", href: "/saree-revival" },
     { name: "ABOUT", href: "/#about" },
     { name: "TRENDING", href: "#trending" },
@@ -131,16 +133,19 @@ export default function Navbar() {
             )}
             
             <button 
+              onClick={toggleCart}
               className="group relative hover:text-[#D4AF37] transition-colors duration-300" 
               aria-label="Cart"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
-              {/* Cart Badge Placeholder */}
-              <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-black text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
-                0
-              </span>
+              {/* Cart Badge */}
+              {getCartCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-black text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                  {getCartCount()}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Toggle Button */}

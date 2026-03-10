@@ -6,7 +6,9 @@ import Script from "next/script";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { AuthModalProvider } from "@/context/AuthModalContext";
 import { AuthUserProvider } from "@/context/AuthUserContext";
+import { CartProvider } from "@/context/CartContext";
 import AuthModal from "@/components/auth/AuthModal";
+import CartDrawer from "@/components/shop/CartDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -125,11 +127,14 @@ export default function RootLayout({
       >
         <AuthUserProvider>
           <AuthModalProvider>
-            <Suspense fallback={null}>
-              <AnalyticsTracker />
-            </Suspense>
-            <AuthModal />
-            {children}
+            <CartProvider>
+              <Suspense fallback={null}>
+                <AnalyticsTracker />
+              </Suspense>
+              <AuthModal />
+              <CartDrawer />
+              {children}
+            </CartProvider>
           </AuthModalProvider>
         </AuthUserProvider>
       </body>

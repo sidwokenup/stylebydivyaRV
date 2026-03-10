@@ -32,7 +32,7 @@ const COLLECTIONS = [
 
 export default function CollectionSection() {
   return (
-    <section className="w-full py-16 md:py-24 bg-white overflow-hidden">
+    <section id="collection" className="w-full py-16 md:py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         
         {/* Model Cutout Carousel / Grid */}

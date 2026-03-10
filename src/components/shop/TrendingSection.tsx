@@ -30,8 +30,8 @@ export default function TrendingSection() {
           <div className="w-12 h-0.5 bg-[#D4AF37] mx-auto mt-6"></div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+        {/* Product Grid / Carousel */}
+        <div className="flex overflow-x-auto md:grid md:grid-cols-4 gap-x-6 gap-y-10 pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
           {TRENDING_PRODUCTS.map((product) => {
              if (!product) return null;
              
@@ -39,7 +39,7 @@ export default function TrendingSection() {
               <Link
                 key={product.id}
                 href={`/shop/${product.collection}/${product.id}`}
-                className="group cursor-pointer block"
+                className="group cursor-pointer block min-w-[70%] sm:min-w-0 snap-center"
               >
                 {/* Image Container */}
                 <div className="relative w-full aspect-[3/4] bg-white overflow-hidden mb-4 rounded-sm shadow-sm transition-shadow duration-300 group-hover:shadow-md">
@@ -48,7 +48,7 @@ export default function TrendingSection() {
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 70vw, (max-width: 768px) 50vw, 25vw"
                   />
                 </div>
 
