@@ -6,10 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
 
-// Import Poster Images
-import desktopPoster from "@/assets/desktop_mainscreen_crousel/desk_lux_re.jpeg";
-import mobilePoster from "@/assets/Mobile_mainscreen_crousel/luxry_redeifned.jpeg";
-
 export default function HeroVideo() {
   const [isMuted, setIsMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -71,28 +67,6 @@ export default function HeroVideo() {
 
       {/* Video Background */}
       <div className="absolute inset-0">
-         {/* Poster Image Overlay - Shown until video loads */}
-         <AnimatePresence>
-           {!isVideoLoaded && (
-             <motion.div
-               initial={{ opacity: 1 }}
-               exit={{ opacity: 0 }}
-               transition={{ duration: 0.8 }}
-               className="absolute inset-0 z-10"
-             >
-               <Image
-                 src={isMobile ? mobilePoster : desktopPoster}
-                 alt="StyleByDivya Luxury Fashion"
-                 fill
-                 className="object-cover"
-                 priority
-                 sizes="100vw"
-               />
-               <div className="absolute inset-0 bg-black/10" />
-             </motion.div>
-           )}
-         </AnimatePresence>
-
          {/* 
            We use a key to force re-render when device changes to ensure correct source is loaded 
            and avoid downloading both videos if possible (though browser might still preload).
@@ -106,7 +80,6 @@ export default function HeroVideo() {
           muted={isMuted}
           playsInline
           preload="auto"
-          onLoadedData={() => setIsVideoLoaded(true)}
           className="absolute inset-0 w-full h-full object-cover"
           // We will use a placeholder src initially or handled via imports below
         >
