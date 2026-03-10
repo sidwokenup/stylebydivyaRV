@@ -398,7 +398,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Phoolsaaz/Ps1.png"
+                  src="/assets/products/saree-revival/PhoolSaaz/Ps1.png"
                   alt="Anarkali"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
