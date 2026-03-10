@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 
 function CallbackContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -17,7 +16,7 @@ function CallbackContent() {
       if (error) {
         console.error("Auth error:", error, error_description);
         // In a real app, you might show a toast here
-        router.push("/");
+        window.location.replace("/");
         return;
       }
 
@@ -33,19 +32,19 @@ function CallbackContent() {
           // Check for 'next' param, otherwise default to '/shop'
           const nextParam = searchParams.get("next");
           const next = nextParam && nextParam.startsWith("/") ? nextParam : "/shop";
-          router.replace(next);
+          window.location.replace(next);
         } catch (err) {
           console.error("Callback handling error:", err);
-          router.replace("/shop");
+          window.location.replace("/shop");
         }
       } else {
         // No code, just redirect
-        router.replace("/shop");
+        window.location.replace("/shop");
       }
     };
 
     handleAuthCallback();
-  }, [router, searchParams]);
+  }, [searchParams]);
 
   return (
     <div className="text-center space-y-4">
