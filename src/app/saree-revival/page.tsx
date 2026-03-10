@@ -354,7 +354,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Aabha/A1.png"
+                  src="/assets/Products/saree-revival/Aabha/A1.png"
                   alt="Lehenga"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -376,7 +376,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Noor-e-Ruhani/Noor1_.png"
+                  src="/assets/Products/saree-revival/Noor-e-Ruhani/Noor1_.png"
                   alt="Suit Set"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -398,7 +398,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/PhoolSaaz/Ps1.png"
+                  src="/assets/Products/saree-revival/PhoolSaaz/Ps1.png"
                   alt="Anarkali"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -420,7 +420,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Revive Grace/Rg1.png"
+                  src="/assets/Products/saree-revival/Revive Grace/Rg1.png"
                   alt="Indo Western"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -442,7 +442,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Viraasat Varnika/Vv1.png"
+                  src="/assets/Products/saree-revival/Viraasat Varnika/Vv1.png"
                   alt="Sharara"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -464,7 +464,7 @@ export default function SareeRevival() {
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
-                  src="/assets/products/saree-revival/Revive Grace/Rg2.png"
+                  src="/assets/Products/saree-revival/Revive Grace/Rg2.png"
                   alt="Crop Top Lehenga"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
