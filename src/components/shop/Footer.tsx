@@ -60,8 +60,11 @@ export default function Footer() {
       </div>
       
       {/* Copyright */}
-      <div className="border-t border-white/10 mt-12 pt-8 text-center">
+      <div className="border-t border-white/10 mt-12 pt-8 text-center flex flex-col gap-2">
         <p className="text-xs text-gray-500">© {new Date().getFullYear()} StyleByDivya. All rights reserved.</p>
+        <Link href="/index-now" className="text-[10px] text-gray-800 hover:text-gray-700 transition-colors" aria-label="Sitemap Index">
+          Sitemap Index
+        </Link>
       </div>
     </footer>
   );
