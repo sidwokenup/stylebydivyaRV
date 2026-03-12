@@ -16,24 +16,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static routes
   const routes = [
     '',
-    '/shop/wrapstyles',
-    '/shop/saree-revival',
-    '/shop/indo-western',
-    '/about',
-    '/contact',
+    '/shop',
+    '/saree-revival',
+    '/terms-and-conditions',
+    '/privacy-policy',
+    '/return-policy',
+    '/shipping-policy',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
   }));
 
   // Dynamic product routes
   const productRoutes = products.map((product) => ({
     url: `${baseUrl}/shop/${product.collection}/${product.id}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
   }));
 
   return [...routes, ...productRoutes];
