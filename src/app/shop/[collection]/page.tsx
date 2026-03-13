@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import { products } from "@/lib/products";
 import Navbar from "@/components/shop/Navbar";
 import Footer from "@/components/shop/Footer";
-import Image from "next/image";
-import Link from "next/link";
 import { Metadata } from "next";
+import ProductGrid from "@/components/shop/ProductGrid";
 
 interface CollectionPageProps {
   params: Promise<{
@@ -71,48 +70,8 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           {normalizedCollection.replace("-", " ")}
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-          {filteredProducts.map((product) => (
-            <Link
-              key={product.id}
-              href={`/shop/${product.collection}/${product.id}`}
-              className="group block"
-            >
-              <div className="w-full aspect-[3/4] bg-white overflow-hidden mb-4 relative rounded-sm">
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                />
-
-                {/* Stock Badge */}
-                {product.inStock === false && (
-                    <span className="absolute top-3 right-3 bg-black text-white text-xs px-3 py-1 uppercase tracking-wide z-10">
-                      Out of Stock
-                    </span>
-                )}
-
-                {/* Free Size Badge (Wrapstyle Only) */}
-                {product.type === "wrapstyle" && (
-                    <span className="absolute top-3 left-3 bg-[#C6A756] text-white text-xs px-3 py-1 uppercase tracking-wide z-10">
-                      FREE SIZE
-                    </span>
-                )}
-              </div>
-
-              <div className="space-y-2 text-center">
-                  <h3 className="mt-4 text-base md:text-lg font-medium text-black transition-colors duration-300 group-hover:text-[#C6A756]">
-                    {product.name}
-                  </h3>
-
-                  <p className="mt-1 text-[#C6A756] font-medium">
-                    ₹ {product.price.toLocaleString("en-IN")}
-                  </p>
-              </div>
-            </Link>
-          ))}
+        <div className="mt-8">
+          <ProductGrid products={filteredProducts} />
         </div>
       </section>
 

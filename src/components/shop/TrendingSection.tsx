@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { products } from "@/lib/products";
+import { calculateDiscount } from "@/lib/utils/calculateDiscount";
 
 // Select specific products for the Trending section
 // We can use IDs to pick exactly which ones we want
@@ -43,6 +44,12 @@ export default function TrendingSection() {
               >
                 {/* Image Container */}
                 <div className="relative w-full aspect-[3/4] bg-white overflow-hidden mb-4 rounded-sm shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                  {/* Discount Badge */}
+                  {product.discount && product.discount > 0 && (
+                    <div className="absolute top-2 left-2 bg-[#C6A756] text-white text-[10px] px-2 py-0.5 rounded shadow-sm z-10 font-medium tracking-wide">
+                      {product.discount}% OFF
+                    </div>
+                  )}
                   <Image
                     src={product.images[0]}
                     alt={product.name}
@@ -57,8 +64,24 @@ export default function TrendingSection() {
                   <h3 className="text-sm md:text-base font-medium text-black tracking-wider uppercase group-hover:text-[#D4AF37] transition-colors duration-300">
                     {product.name}
                   </h3>
-                  <p className="text-[#C6A756] font-medium mt-1 text-sm md:text-base">
-                    ₹ {product.price.toLocaleString("en-IN")}
+                  <div className="mt-1 flex items-center justify-center gap-2">
+                    {product.discount && product.discount > 0 ? (
+                      <>
+                        <span className="text-gray-400 line-through text-xs md:text-sm">
+                          ₹ {product.price.toLocaleString("en-IN")}
+                        </span>
+                        <span className="text-[#C6A756] font-medium text-sm md:text-base">
+                          ₹ {calculateDiscount(product.price, product.discount).toLocaleString("en-IN")}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-[#C6A756] font-medium text-sm md:text-base">
+                        ₹ {product.price.toLocaleString("en-IN")}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[10px] md:text-xs text-gray-400 uppercase tracking-widest mt-1">
+                    {product.category}
                   </p>
                 </div>
               </Link>

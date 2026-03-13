@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "@/lib/products";
+import { calculateDiscount } from "@/lib/utils/calculateDiscount";
 
 export interface CartItem {
   id: string;
@@ -62,12 +63,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
             : item
         );
       } else {
+        const finalPrice = calculateDiscount(product.price, product.discount);
         return [
           ...prevItems,
           {
             id: product.id,
             name: product.name,
-            price: product.price,
+            price: finalPrice,
             image: product.images[0],
             quantity: 1,
             collection: product.collection,

@@ -9,6 +9,7 @@ import { Product, getProductsByCollection } from "@/lib/products";
 import ProductAccordion from "@/components/ProductAccordion";
 import Link from "next/link";
 import AddToCartButton from "@/components/shop/AddToCartButton";
+import { calculateDiscount } from "@/lib/utils/calculateDiscount";
 
 // Company WhatsApp Number (International format without +)
 const WHATSAPP_NUMBER = "918708461553";
@@ -95,7 +96,12 @@ export default function ProductView({ product }: ProductViewProps) {
       }
     }
 
-    let message = `Hello StyleByDivya,\n\nI would like to buy the following product:\n\nProduct Name: ${product.name}\nCollection: ${product.collection}\nPrice: ₹ ${product.price.toLocaleString("en-IN")}`;
+    const discountedPrice = calculateDiscount(product.price, product.discount);
+    let message = `Hello StyleByDivya,\n\nI would like to buy the following product:\n\nProduct Name: ${product.name}\nCollection: ${product.collection}\nPrice: ₹ ${discountedPrice.toLocaleString("en-IN")}`;
+    
+    if (product.discount && product.discount > 0) {
+        message += ` (Original: ₹ ${product.price.toLocaleString("en-IN")})`;
+    }
 
     if (isWrapStyle) {
       message += `\n\nSize: Free Size`;
@@ -201,9 +207,33 @@ export default function ProductView({ product }: ProductViewProps) {
                   <h1 className="text-3xl md:text-4xl font-semibold tracking-wide text-black mb-2">
                     {product.name}
                   </h1>
-                  <p className="text-xl md:text-2xl text-[#C6A756] font-medium">
-                    ₹ {product.price.toLocaleString("en-IN")}
-                  </p>
+                  
+                  <div className="flex flex-col mb-2">
+                    <div className="flex items-center gap-3 flex-wrap">
+                        {product.discount && product.discount > 0 ? (
+                          <>
+                            <p className="text-xl md:text-2xl text-gray-400 line-through font-medium">
+                              ₹ {product.price.toLocaleString("en-IN")}
+                            </p>
+                            <p className="text-xl md:text-2xl text-[#C6A756] font-medium">
+                              ₹ {calculateDiscount(product.price, product.discount).toLocaleString("en-IN")}
+                            </p>
+                            <span className="bg-[#C6A756] text-white text-xs px-2 py-1 rounded font-bold">
+                                {product.discount}% OFF
+                            </span>
+                          </>
+                        ) : (
+                          <p className="text-xl md:text-2xl text-[#C6A756] font-medium">
+                            ₹ {product.price.toLocaleString("en-IN")}
+                          </p>
+                        )}
+                    </div>
+                    {product.discount && product.discount > 0 && (
+                        <p className="text-green-600 text-sm font-medium mt-1">
+                            You save ₹ {(product.price - calculateDiscount(product.price, product.discount)).toLocaleString("en-IN")}
+                        </p>
+                    )}
+                  </div>
                   
                   {/* Stock Availability Tag */}
                   {product.inStock !== false ? (
@@ -215,6 +245,18 @@ export default function ProductView({ product }: ProductViewProps) {
                       🔴 Out of Stock
                     </p>
                   )}
+
+                  {/* Product Metadata */}
+                  <div className="mt-4 flex flex-col gap-1 text-sm text-gray-500">
+                    <p>
+                      <span className="font-medium text-black uppercase tracking-wide">Collection:</span>{" "}
+                      <span className="capitalize">{product.collection.replace("-", " ")}</span>
+                    </p>
+                    <p>
+                      <span className="font-medium text-black uppercase tracking-wide">Category:</span>{" "}
+                      {product.category}
+                    </p>
+                  </div>
 
                   {/* WrapStyle Badge */}
                   {isWrapStyle && (
@@ -459,8 +501,24 @@ export default function ProductView({ product }: ProductViewProps) {
                         <h4 className="text-center font-medium uppercase tracking-wide text-sm text-gray-800">
                           {item.name}
                         </h4>
-                        <p className="text-center text-[#C6A756] text-sm mt-1">
-                          ₹ {item.price.toLocaleString("en-IN")}
+                        <div className="mt-1 flex items-center justify-center gap-2">
+                            {item.discount && item.discount > 0 ? (
+                              <>
+                                <span className="text-gray-400 line-through text-xs">
+                                  ₹ {item.price.toLocaleString("en-IN")}
+                                </span>
+                                <span className="text-[#C6A756] font-medium text-sm">
+                                  ₹ {calculateDiscount(item.price, item.discount).toLocaleString("en-IN")}
+                                </span>
+                              </>
+                            ) : (
+                                <p className="text-center text-[#C6A756] text-sm mt-1">
+                                  ₹ {item.price.toLocaleString("en-IN")}
+                                </p>
+                            )}
+                        </div>
+                        <p className="text-center text-[10px] text-gray-400 uppercase tracking-widest mt-1">
+                          {item.category}
                         </p>
                      </Link>
                    ))}

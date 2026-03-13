@@ -8,7 +8,9 @@ export interface Product {
   id: string;
   name: string;
   collection: string;
+  category: "Tops" | "Skirt" | "Outfits" | "Couple Combo" | "Trouser";
   price: number;
+  discount?: number;
   description: string;
   images: string[];
   type: "wrapstyle" | "indowestern" | "sareerevamp";
@@ -31,7 +33,8 @@ export const products: Product[] = [
     id: "celestial-pearl",
     name: "Celestial Pearl",
     collection: "wrapstyles",
-    price: 6499,
+    category: "Outfits",
+    price: 3599,
     description: "A divine wrap style ensemble featuring pearlescent tones and fluid draping.",
     images: [
       "/assets/Products/Wrapstyles/Celestial Pearl/Cp1.png",
@@ -72,7 +75,8 @@ export const products: Product[] = [
     id: "divyas-versatile-brown-wrap-dress",
     name: "Divya's Versatile Brown Wrap Dress",
     collection: "wrapstyles",
-    price: 7499,
+    category: "Outfits",
+    price: 3599,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
       "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv1.jpg",
@@ -109,7 +113,8 @@ export const products: Product[] = [
     id: "the-odyssey-drape-skirt",
     name: "The Odyssey Drape Skirt",
     collection: "wrapstyles",
-    price: 7499,
+    category: "Skirt",
+    price: 1599,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
       "/assets/Products/Wrapstyles/The Odyssey Drape Skirt/OD6.jpg",
@@ -145,7 +150,8 @@ export const products: Product[] = [
     id: "the-nocturne-convertible-top",
     name: "The Nocturne Convertible Top",
     collection: "wrapstyles",
-    price: 7499,
+    category: "Tops",
+    price: 1499,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
       "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc1.png",
@@ -182,7 +188,9 @@ export const products: Product[] = [
     id: "the-aria-cowl-top",
     name: "The Aria Cowl Top",
     collection: "wrapstyles",
-    price: 7499,
+    category: "Tops",
+    price: 1499,
+    discount: 40,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
       "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac1.png",
@@ -221,7 +229,8 @@ export const products: Product[] = [
     id: "the-riviera-drape-trouser",
     name: "The Riviera Drape Trouser",
     collection: "wrapstyles",
-    price: 7499,
+    category: "Trouser",
+    price: 1599,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
       "/assets/Products/Wrapstyles/The Riviera Drape Trouser/RD1.jpg",
@@ -258,6 +267,7 @@ export const products: Product[] = [
     id: "aabha",
     name: "Aabha",
     collection: "saree-revival",
+    category: "Outfits",
     price: 5999,
     description: "Revived from a vintage saree, Aabha brings traditional charm to contemporary fashion.",
     images: [
@@ -292,6 +302,7 @@ export const products: Product[] = [
     id: "noor-e-ruhani",
     name: "Noor-e-Ruhani",
     collection: "saree-revival",
+    category: "Outfits",
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
@@ -326,6 +337,7 @@ export const products: Product[] = [
     id: "phool-saaz",
     name: "Phool Saaz",
     collection: "saree-revival",
+    category: "Outfits",
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
@@ -362,6 +374,7 @@ export const products: Product[] = [
     id: "revive-grace",
     name: "Revive Grace",
     collection: "saree-revival",
+    category: "Outfits",
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
@@ -398,6 +411,7 @@ export const products: Product[] = [
     id: "viraasat-varnika",
     name: "Viraasat Varnika",
     collection: "saree-revival",
+    category: "Outfits",
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
@@ -436,7 +450,9 @@ export const products: Product[] = [
     id: "the-valentina-top",
     name: "The Valentina Top",
     collection: "wrapstyles",
-    price: 4499,
+    category: "Tops",
+    price: 1500,
+    discount: 40,
     description: "Chic and sophisticated top from our latest collection.",
     images: [
       "/assets/Products/Wrapstyles/The Valentina Top/Vt1.jpg",
@@ -470,7 +486,8 @@ export const products: Product[] = [
     id: "the-empress-drape",
     name: "The Empress Drape",
     collection: "indo-western",
-    price: 9999,
+    category: "Outfits",
+    price: 3599,
     description: "Regal draping fit for royalty, part of our exclusive new line.",
     images: [
       "/assets/Products/indo-western/The Empress Drape/Ed1.jpg",
@@ -519,4 +536,3 @@ export function getProductsByCollection(collection: string) {
     (p) => p.collection.toLowerCase() === collection.toLowerCase()
   );
 }
-

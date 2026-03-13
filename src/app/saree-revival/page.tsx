@@ -222,7 +222,7 @@ export default function SareeRevival() {
                     Before
                   </div>
                   <Image
-                    src="/saree-revival/before/saree2.jpg"
+                    src="/assets/saree-revival/before/revivegrace.jpeg"
                     alt="Original Saree"
                     fill
                     className="object-cover"
@@ -239,7 +239,7 @@ export default function SareeRevival() {
                     After
                   </div>
                   <Image
-                    src="/saree-revival/after/saree2.jpg"
+                    src="/assets/saree-revival/after/revivegrace.png"
                     alt="Transformed Outfit"
                     fill
                     className="object-cover"
@@ -260,7 +260,7 @@ export default function SareeRevival() {
                     Before
                   </div>
                   <Image
-                    src="/saree-revival/before/saree3.jpg"
+                    src="/assets/saree-revival/before/phoolsaaz.jpeg"
                     alt="Original Saree"
                     fill
                     className="object-cover"
@@ -277,7 +277,7 @@ export default function SareeRevival() {
                     After
                   </div>
                   <Image
-                    src="/saree-revival/after/saree3.jpg"
+                    src="/assets/saree-revival/after/phoolsaaz.png"
                     alt="Transformed Outfit"
                     fill
                     className="object-cover"
@@ -298,7 +298,7 @@ export default function SareeRevival() {
                     Before
                   </div>
                   <Image
-                    src="/saree-revival/before/saree4.jpg"
+                    src="/assets/saree-revival/before/virasatvarnika.jpeg"
                     alt="Original Saree"
                     fill
                     className="object-cover"
@@ -315,7 +315,7 @@ export default function SareeRevival() {
                     After
                   </div>
                   <Image
-                    src="/saree-revival/after/saree4.jpg"
+                    src="/assets/saree-revival/after/virasatvarnika.png"
                     alt="Transformed Outfit"
                     fill
                     className="object-cover"
