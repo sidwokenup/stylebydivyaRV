@@ -65,6 +65,9 @@ export default function HeroCarousel() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Update active video when screen size changes
+  const activeVideoSrc = isMobile ? SLIDES[activeIndex].mobileVideo : SLIDES[activeIndex].desktopVideo;
+
   const handleNext = useCallback(() => {
     setDirection(1);
     setActiveIndex((prev) => (prev + 1) % SLIDES.length);
@@ -142,14 +145,14 @@ export default function HeroCarousel() {
             {SLIDES[activeIndex].desktopVideo || SLIDES[activeIndex].mobileVideo ? (
               <div className="absolute inset-0 w-full h-full">
                 <video
-                  key={activeIndex}
+                  key={`${activeIndex}-${activeVideoSrc}`}
                   autoPlay
                   muted={isMuted}
                   playsInline
                   onEnded={handleNext}
                   className="absolute inset-0 w-full h-full object-contain scale-[1.15] pointer-events-none"
                 >
-                  <source src={isMobile ? SLIDES[activeIndex].mobileVideo : SLIDES[activeIndex].desktopVideo} type="video/mp4" />
+                  <source src={activeVideoSrc} type="video/mp4" />
                 </video>
                 {/* Shop Now Button for Video Banner */}
                 <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 z-20 pointer-events-none">
