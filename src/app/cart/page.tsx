@@ -15,7 +15,11 @@ export default function CartPage() {
     let message = "Hello StyleByDivya,\n\nI would like to place an order.\n\n*Order Details:*\n\n";
     
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. ${item.name}\n   Price: ₹${item.price.toLocaleString("en-IN")}\n   Quantity: ${item.quantity}\n\n`;
+      message += `${index + 1}. ${item.name}\n`;
+      if (item.variant) {
+        message += `   Size: ${item.variant}\n`;
+      }
+      message += `   Price: ₹${item.price.toLocaleString("en-IN")}\n   Quantity: ${item.quantity}\n\n`;
     });
 
     message += `*Total: ₹${getCartTotal().toLocaleString("en-IN")}*\n`;
@@ -76,6 +80,9 @@ export default function CartPage() {
                     <div className="flex-grow flex flex-col sm:flex-row justify-between w-full gap-4">
                       <div className="space-y-2 text-center sm:text-left">
                         <h3 className="text-lg font-medium text-black line-clamp-2">{item.name}</h3>
+                        {item.variant && (
+                          <p className="text-sm text-gray-600 font-medium">{item.variant}</p>
+                        )}
                         <p className="text-sm text-gray-500 uppercase tracking-wide">{item.collection}</p>
                         <p className="text-[#C6A756] font-medium text-lg">₹ {item.price.toLocaleString("en-IN")}</p>
                       </div>

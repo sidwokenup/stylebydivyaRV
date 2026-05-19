@@ -45,7 +45,11 @@ export default function CartDrawer() {
     let message = "Hello StyleByDivya,\n\nI would like to place an order.\n\n*Order Details:*\n\n";
     
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. ${item.name}\n   Price: ₹${item.price.toLocaleString("en-IN")}\n   Quantity: ${item.quantity}\n\n`;
+      message += `${index + 1}. ${item.name}\n`;
+      if (item.variant) {
+        message += `   Size: ${item.variant}\n`;
+      }
+      message += `   Price: ₹${item.price.toLocaleString("en-IN")}\n   Quantity: ${item.quantity}\n\n`;
     });
 
     message += `*Total: ₹${getCartTotal().toLocaleString("en-IN")}*\n`;
@@ -136,6 +140,9 @@ export default function CartDrawer() {
                             </svg>
                           </button>
                         </div>
+                        {item.variant && (
+                          <p className="text-[11px] text-gray-500 mt-0.5">{item.variant}</p>
+                        )}
                         <p className="text-sm text-gray-500 mt-1">₹ {item.price.toLocaleString("en-IN")}</p>
                       </div>
 

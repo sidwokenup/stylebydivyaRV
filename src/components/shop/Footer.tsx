@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import instagramIcon from "@/assets/svg_logo/instagram (2).svg";
-import whatsappIcon from "@/assets/svg_logo/whatsapp (2).svg";
 
 export default function Footer() {
   return (
@@ -38,7 +36,7 @@ export default function Footer() {
               <span className="sr-only">WhatsApp</span>
               <div className="relative w-5 h-5">
                 <Image 
-                  src={whatsappIcon} 
+                  src="/assets/svg_logo/whatsapp (2).svg" 
                   alt="WhatsApp" 
                   fill 
                 />
@@ -49,7 +47,7 @@ export default function Footer() {
               <span className="sr-only">Instagram</span>
               <div className="relative w-5 h-5">
                 <Image 
-                  src={instagramIcon} 
+                  src="/assets/svg_logo/instagram (2).svg" 
                   alt="Instagram" 
                   fill 
                 />

@@ -1,30 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// Using existing assets as model cutouts (using object-contain to prevent cropping)
-import model1 from "@/assets/Collec_crousel/wrap_collec.png";
-import model2 from "@/assets/Collec_crousel/Indo-western_collec.png";
-import model3 from "@/assets/Collec_crousel/saree_collec.png";
-
 const COLLECTIONS = [
   {
     id: 1,
     title: "Wrap Style",
-    image: model1,
+    image: "/assets/Collec_crousel/wrap_collec.png",
     href: "/shop/wrapstyles",
     alt: "Wrap Style Collection Model",
   },
   {
     id: 2,
     title: "Indo-Western",
-    image: model2,
+    image: "/assets/Collec_crousel/Indo-western_collec.png",
     href: "/shop/indo-western",
     alt: "Indo-Western Collection Model",
   },
   {
     id: 3,
     title: "Saree Revival",
-    image: model3,
+    image: "/assets/Collec_crousel/saree_collec.png",
     href: "/shop/saree-revival",
     alt: "Saree Revival Collection Model",
   },
@@ -74,7 +69,7 @@ export default function CollectionSection() {
                   fill
                   className="object-contain object-bottom transition-transform duration-700 md:group-hover:scale-105"
                   sizes="(max-width: 768px) 85vw, 33vw"
-                  priority={item.id === 1} // Load first image immediately
+                  priority // Load all collection images immediately
                 />
                 
                 {/* Mobile Title Overlay - LUXURY GOLD UPDATE */}

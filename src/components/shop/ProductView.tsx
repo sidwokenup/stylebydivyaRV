@@ -38,11 +38,33 @@ export default function ProductView({ product }: ProductViewProps) {
     fullLength: "",
   });
 
+  // Couple Combo Size State
+  const [coupleSizes, setCoupleSizes] = useState({
+    men: "M",
+  });
+
+  // Couple Combo Women Outfit State
+  const [selectedWomenOutfit, setSelectedWomenOutfit] = useState(
+    product.womenOutfitOptions?.[0] || null
+  );
+
+  // Update selected women outfit if product changes
+  useEffect(() => {
+    if (product.womenOutfitOptions && product.womenOutfitOptions.length > 0) {
+      setSelectedWomenOutfit(product.womenOutfitOptions[0]);
+    } else {
+      setSelectedWomenOutfit(null);
+    }
+  }, [product]);
+
   // Determine Product Type
   const collectionLower = product.collection.toLowerCase();
   const isWrapStyle = collectionLower.includes("wrap");
   const isIndoWestern = collectionLower.includes("indo");
   const isOldSareeRevamp = collectionLower.includes("old") || collectionLower.includes("revamp") || product.type === "sareerevamp";
+  const isCoupleCombo = product.type === "couplecombo" || collectionLower.includes("couplecombo");
+
+  const [isCopied, setIsCopied] = useState(false);
 
   // Check screen size
   useEffect(() => {
@@ -74,7 +96,7 @@ export default function ProductView({ product }: ProductViewProps) {
 
   // Validation Logic
   const areMeasurementsValid = () => {
-    if (isWrapStyle) return true;
+    if (isWrapStyle || isCoupleCombo) return true;
     return (
       measurements.shoulder.trim() !== "" &&
       measurements.chest.trim() !== "" &&
@@ -96,15 +118,19 @@ export default function ProductView({ product }: ProductViewProps) {
       }
     }
 
-    const discountedPrice = calculateDiscount(product.price, product.discount);
+    const activePrice = selectedWomenOutfit ? selectedWomenOutfit.price : product.price;
+    const discountedPrice = calculateDiscount(activePrice, product.discount);
     let message = `Hello StyleByDivya,\n\nI would like to buy the following product:\n\nProduct Name: ${product.name}\nCollection: ${product.collection}\nPrice: ₹ ${discountedPrice.toLocaleString("en-IN")}`;
     
     if (product.discount && product.discount > 0) {
-        message += ` (Original: ₹ ${product.price.toLocaleString("en-IN")})`;
+        message += ` (Original: ₹ ${activePrice.toLocaleString("en-IN")})`;
     }
 
     if (isWrapStyle) {
       message += `\n\nSize: Free Size`;
+    } else if (isCoupleCombo) {
+      const womenVariant = selectedWomenOutfit ? selectedWomenOutfit.label : "Top Only";
+      message += `\n\nSizes:\nMen's Size: ${coupleSizes.men}\nWomen's Outfit: ${womenVariant} (Free Size)`;
     } else if (isIndoWestern || isOldSareeRevamp) {
        message += `\n\nMy Measurements:\nShoulder: ${measurements.shoulder}\nChest: ${measurements.chest}\nWaist: ${measurements.waist}\nFull Length: ${measurements.fullLength}`;
     }
@@ -115,6 +141,66 @@ export default function ProductView({ product }: ProductViewProps) {
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
     window.open(whatsappUrl, "_blank");
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: `StyleByDivya - ${product.name}`,
+      text: `Check out ${product.name} at StyleByDivya!`,
+      url: window.location.href,
+    };
+
+    // 1. Try Native Web Share API (Requires HTTPS or localhost)
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return; // Success, exit early
+      } catch (err) {
+        // Ignore AbortError (user closed the share sheet)
+        if ((err as Error).name === 'AbortError') return;
+        console.error("Error sharing natively:", err);
+        // If native share fails for some other reason, fall through to copy
+      }
+    }
+
+    // 2. Modern Clipboard API Fallback (Requires HTTPS or localhost)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+        return; // Success, exit early
+      } catch (err) {
+        console.error("Failed to copy using clipboard API:", err);
+        // Fall through to legacy method
+      }
+    }
+
+    // 3. Legacy Fallback: For non-secure contexts (e.g. testing on mobile over LAN HTTP)
+    try {
+      const textArea = document.createElement("textarea");
+      textArea.value = window.location.href;
+      // Make it invisible
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } else {
+        alert("Unable to copy link. Please copy the URL manually from your browser.");
+      }
+    } catch (err) {
+      console.error("Failed to copy using legacy method:", err);
+      alert("Unable to copy link. Please copy the URL manually from your browser.");
+    }
   };
 
   const relatedProducts = getProductsByCollection(product.collection)
@@ -204,19 +290,37 @@ export default function ProductView({ product }: ProductViewProps) {
                 
                 {/* Product Header */}
                 <div>
-                  <h1 className="text-3xl md:text-4xl font-semibold tracking-wide text-black mb-2">
-                    {product.name}
-                  </h1>
+                  <div className="flex justify-between items-start gap-4 mb-2">
+                    <h1 className="text-3xl md:text-4xl font-semibold tracking-wide text-black">
+                      {product.name}
+                    </h1>
+                    <button 
+                      onClick={handleShare}
+                      className="p-2.5 text-gray-500 hover:text-[#C6A756] bg-gray-50 hover:bg-[#C6A756]/10 rounded-full transition-all duration-300 flex-shrink-0"
+                      aria-label="Share product"
+                      title="Share product"
+                    >
+                      {isCopied ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-green-600">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                   
                   <div className="flex flex-col mb-2">
                     <div className="flex items-center gap-3 flex-wrap">
                         {product.discount && product.discount > 0 ? (
                           <>
                             <p className="text-xl md:text-2xl text-gray-400 line-through font-medium">
-                              ₹ {product.price.toLocaleString("en-IN")}
+                              ₹ {(selectedWomenOutfit ? selectedWomenOutfit.price : product.price).toLocaleString("en-IN")}
                             </p>
                             <p className="text-xl md:text-2xl text-[#C6A756] font-medium">
-                              ₹ {calculateDiscount(product.price, product.discount).toLocaleString("en-IN")}
+                              ₹ {calculateDiscount(selectedWomenOutfit ? selectedWomenOutfit.price : product.price, product.discount).toLocaleString("en-IN")}
                             </p>
                             <span className="bg-[#C6A756] text-white text-xs px-2 py-1 rounded font-bold">
                                 {product.discount}% OFF
@@ -224,13 +328,13 @@ export default function ProductView({ product }: ProductViewProps) {
                           </>
                         ) : (
                           <p className="text-xl md:text-2xl text-[#C6A756] font-medium">
-                            ₹ {product.price.toLocaleString("en-IN")}
+                            ₹ {(selectedWomenOutfit ? selectedWomenOutfit.price : product.price).toLocaleString("en-IN")}
                           </p>
                         )}
                     </div>
                     {product.discount && product.discount > 0 && (
                         <p className="text-green-600 text-sm font-medium mt-1">
-                            You save ₹ {(product.price - calculateDiscount(product.price, product.discount)).toLocaleString("en-IN")}
+                            You save ₹ {((selectedWomenOutfit ? selectedWomenOutfit.price : product.price) - calculateDiscount(selectedWomenOutfit ? selectedWomenOutfit.price : product.price, product.discount)).toLocaleString("en-IN")}
                         </p>
                     )}
                   </div>
@@ -274,7 +378,7 @@ export default function ProductView({ product }: ProductViewProps) {
                   </p>
                 </div>
 
-                {/* Conditional Measurement Form */}
+                {/* Conditional Measurement Form / Size Selectors */}
                 <div className="py-4 border-t border-gray-100 border-b mb-4">
                   {isWrapStyle ? (
                     <div className="flex items-center gap-2">
@@ -282,6 +386,67 @@ export default function ProductView({ product }: ProductViewProps) {
                       <p className="text-black font-medium tracking-wide">
                         Free Size — <span className="text-gray-500 font-normal">Designed to fit comfortably.</span>
                       </p>
+                    </div>
+                  ) : isCoupleCombo ? (
+                    <div className="space-y-6">
+                      <h3 className="text-sm font-semibold uppercase tracking-widest text-black flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-[#C6A756] rounded-full"></span>
+                        Select Sizes
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Men's Size */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <label className="block text-xs uppercase tracking-widest text-gray-800 font-medium">Men's Size</label>
+                            <span className="text-[10px] uppercase tracking-wider text-[#C6A756] cursor-pointer hover:underline">Size Guide</span>
+                          </div>
+                          <div className="flex gap-3">
+                            {["S", "M", "L", "XL"].map((size) => (
+                              <button
+                                key={`men-${size}`}
+                                onClick={() => setCoupleSizes({...coupleSizes, men: size})}
+                                className={`w-12 h-12 rounded-sm border flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                                  coupleSizes.men === size
+                                    ? "bg-[#C6A756] border-[#C6A756] text-white shadow-md scale-105"
+                                    : "bg-white border-gray-200 text-gray-600 hover:border-[#C6A756] hover:text-[#C6A756]"
+                                }`}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Women's Outfit Selection */}
+                        <div className="space-y-3 md:col-span-2 mt-4 md:mt-0">
+                          <div className="flex items-center justify-between">
+                            <label className="block text-xs uppercase tracking-widest text-gray-800 font-medium">Women's Outfit</label>
+                            <span className="text-[10px] uppercase tracking-wider text-[#C6A756]">Free Size</span>
+                          </div>
+                          <div className="flex flex-wrap gap-3">
+                            {product.womenOutfitOptions && product.womenOutfitOptions.length > 0 ? (
+                              product.womenOutfitOptions.map((option) => (
+                                <button
+                                  key={`women-${option.label}`}
+                                  onClick={() => setSelectedWomenOutfit(option)}
+                                  className={`px-4 h-12 rounded-sm border flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                                    selectedWomenOutfit?.label === option.label
+                                      ? "bg-[#C6A756] border-[#C6A756] text-white shadow-md scale-105"
+                                      : "bg-white border-gray-200 text-gray-600 hover:border-[#C6A756] hover:text-[#C6A756]"
+                                  }`}
+                                >
+                                  {option.label}
+                                </button>
+                              ))
+                            ) : (
+                               <button
+                                 className="px-4 h-12 rounded-sm border bg-[#C6A756] border-[#C6A756] text-white shadow-md cursor-default text-sm font-medium"
+                               >
+                                 Top Only
+                               </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ) : (isIndoWestern || isOldSareeRevamp) ? (
                     <div className="space-y-4">
@@ -340,7 +505,10 @@ export default function ProductView({ product }: ProductViewProps) {
 
                 {/* CTA Buttons */}
                 <div className="space-y-3 pt-4">
-                  <AddToCartButton product={product} />
+                  <AddToCartButton 
+                    product={selectedWomenOutfit ? { ...product, price: selectedWomenOutfit.price } : product} 
+                    variant={isCoupleCombo ? `Men: ${coupleSizes.men}, Women: ${selectedWomenOutfit ? selectedWomenOutfit.label : "Top Only"} (Free Size)` : undefined} 
+                  />
                   <button 
                     onClick={handleBuyNow}
                     className="w-full py-4 border border-[#C6A756] text-black font-medium uppercase tracking-widest hover:bg-[#C6A756] hover:text-white transition-colors"

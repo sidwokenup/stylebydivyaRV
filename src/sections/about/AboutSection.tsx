@@ -15,50 +15,33 @@ interface CardData {
   alt: string;
 }
 
-// Import assets statically to let Next.js handle optimization
-// We will use require as per previous pattern or standard imports if possible.
-// Using require to ensure path resolution works similarly to video section if needed,
-// but for Images, standard import is better for Next.js optimization.
-// Let's try standard imports first, assuming configured alias or relative path.
-// If alias @/assets works, great.
-
-import desktopAbout from "@/assets/Desktop About Section/desktop_about.png";
-import desktopWrapStyle from "@/assets/Desktop About Section/desktop_wrapstyle.png";
-import desktopIndoWestern from "@/assets/Desktop About Section/desktop_indowestern.png";
-import desktopOldSaree from "@/assets/Desktop About Section/desktop_oldsaree.png";
-
-import mobileAbout from "@/assets/Mobile About Section/mobile_aboutcard.png";
-import mobileWrapStyle from "@/assets/Mobile About Section/mobile_wrapstyle.png";
-import mobileIndoWestern from "@/assets/Mobile About Section/mobile_indowestern.png";
-import mobileOldSaree from "@/assets/Mobile About Section/mobile_oldsaree.png";
-
 const CARDS: CardData[] = [
   {
     id: 0,
     title: "About",
-    desktopSrc: desktopAbout,
-    mobileSrc: mobileAbout,
+    desktopSrc: "/assets/Desktop About Section/desktop_about.png",
+    mobileSrc: "/assets/Mobile About Section/mobile_aboutcard.png",
     alt: "About StyleByDivya",
   },
   {
     id: 1,
     title: "Wrap Style",
-    desktopSrc: desktopWrapStyle,
-    mobileSrc: mobileWrapStyle,
+    desktopSrc: "/assets/Desktop About Section/desktop_wrapstyle.png",
+    mobileSrc: "/assets/Mobile About Section/mobile_wrapstyle.png",
     alt: "Wrap Style Collection",
   },
   {
     id: 2,
     title: "Indo-Western",
-    desktopSrc: desktopIndoWestern,
-    mobileSrc: mobileIndoWestern,
+    desktopSrc: "/assets/Desktop About Section/desktop_indowestern.png",
+    mobileSrc: "/assets/Mobile About Section/mobile_indowestern.png",
     alt: "Indo-Western Collection",
   },
   {
     id: 3,
     title: "Old Saree",
-    desktopSrc: desktopOldSaree,
-    mobileSrc: mobileOldSaree,
+    desktopSrc: "/assets/Desktop About Section/desktop_oldsaree.png",
+    mobileSrc: "/assets/Mobile About Section/mobile_oldsaree.png",
     alt: "Old Saree Revamp",
   },
 ];

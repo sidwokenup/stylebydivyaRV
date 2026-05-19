@@ -5,14 +5,6 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-// Desktop Images
-import desktopSlide1 from "@/assets/desktop_mainscreen_crousel/desk_lux_re.jpeg";
-import desktopSlide2 from "@/assets/desktop_mainscreen_crousel/flat20.jpeg";
-
-// Mobile Images
-import mobileSlide1 from "@/assets/Mobile_mainscreen_crousel/luxry_redeifned.jpeg";
-import mobileSlide2 from "@/assets/Mobile_mainscreen_crousel/Flatoff.png";
-
 const SLIDES = [
   {
     id: 3,
@@ -25,8 +17,8 @@ const SLIDES = [
   },
   {
     id: 1,
-    mobileImage: mobileSlide1,
-    desktopImage: desktopSlide1,
+    mobileImage: "/assets/Mobile_mainscreen_crousel/luxry_redeifned.jpeg",
+    desktopImage: "/assets/desktop_mainscreen_crousel/desk_lux_re.jpeg",
     title: "Luxury Redefined",
     subtitle: "Discover timeless elegance",
     cta: "Shop Now",
@@ -34,8 +26,8 @@ const SLIDES = [
   },
   {
     id: 2,
-    mobileImage: mobileSlide2,
-    desktopImage: desktopSlide2,
+    mobileImage: "/assets/Mobile_mainscreen_crousel/Flatoff.png",
+    desktopImage: "/assets/desktop_mainscreen_crousel/flat20.jpeg",
     title: "Flat 20% Off",
     subtitle: "Limited time festive sale",
     cta: "View Offers",
@@ -143,15 +135,16 @@ export default function HeroCarousel() {
           {/* Background Image/Video with Overlay */}
           <div className="absolute inset-0">
             {SLIDES[activeIndex].desktopVideo || SLIDES[activeIndex].mobileVideo ? (
-              <div className="absolute inset-0 w-full h-full">
-                <video
-                  key={`${activeIndex}-${activeVideoSrc}`}
-                  autoPlay
-                  muted={isMuted}
-                  playsInline
-                  onEnded={handleNext}
-                  className="absolute inset-0 w-full h-full object-contain scale-[1.15] pointer-events-none"
-                >
+              <div className="absolute inset-0 w-full h-full overflow-hidden">
+                  <video
+                    key={`${activeIndex}-${activeVideoSrc}`}
+                    autoPlay
+                    muted={isMuted}
+                    playsInline
+                    preload="auto"
+                    onEnded={handleNext}
+                    className="absolute inset-0 w-full h-full object-cover scale-[1.15] pointer-events-none"
+                  >
                   <source src={activeVideoSrc} type="video/mp4" />
                 </video>
                 {/* Shop Now Button for Video Banner */}

@@ -7,9 +7,10 @@ import { Product } from "@/lib/products";
 interface AddToCartButtonProps {
   product: Product;
   className?: string;
+  variant?: string;
 }
 
-export default function AddToCartButton({ product, className = "" }: AddToCartButtonProps) {
+export default function AddToCartButton({ product, className = "", variant }: AddToCartButtonProps) {
   const { addToCart } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -18,7 +19,7 @@ export default function AddToCartButton({ product, className = "" }: AddToCartBu
     
     // Simulate a small delay for better UX feel (or just immediate)
     setTimeout(() => {
-      addToCart(product);
+      addToCart(product, variant);
       setIsAdding(false);
     }, 300);
   };

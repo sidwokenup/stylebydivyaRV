@@ -41,14 +41,21 @@ export async function generateMetadata({
       description: product.description || SEO.description,
       url: url,
       siteName: SEO.siteName,
-      images: product.images[0] ? [{ url: product.images[0] }] : [],
+      images: product.images[0] ? [
+        { 
+          url: product.images[0].startsWith('http') ? product.images[0] : `${SEO.siteUrl}${product.images[0]}`,
+          width: 800,
+          height: 1067,
+          alt: product.name,
+        }
+      ] : [],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title: product.name,
       description: product.description || SEO.description,
-      images: product.images[0] ? [product.images[0]] : [],
+      images: product.images[0] ? [product.images[0].startsWith('http') ? product.images[0] : `${SEO.siteUrl}${product.images[0]}`] : [],
     },
   };
 }

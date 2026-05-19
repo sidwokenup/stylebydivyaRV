@@ -5,19 +5,21 @@ import { Product } from "@/lib/products";
 import { calculateDiscount } from "@/lib/utils/calculateDiscount";
 
 export interface CartItem {
-  id: string;
+  id: string; // product.id + '-' + variant (if variant exists)
+  productId: string;
   name: string;
   price: number;
   image: string;
   quantity: number;
   collection: string;
+  variant?: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addToCart: (product: Product, variant?: string) => void;
+  removeFromCart: (cartItemId: string) => void;
+  updateQuantity: (cartItemId: string, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
   getCartCount: () => number;
@@ -53,12 +55,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [cartItems, isLoaded]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, variant?: string) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const cartItemId = variant ? `${product.id}-${variant}` : product.id;
+      const existingItem = prevItems.find((item) => item.id === cartItemId);
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id
+          item.id === cartItemId
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -67,12 +70,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return [
           ...prevItems,
           {
-            id: product.id,
+            id: cartItemId,
+            productId: product.id,
             name: product.name,
             price: finalPrice,
             image: product.images[0],
             quantity: 1,
             collection: product.collection,
+            variant: variant,
           },
         ];
       }
@@ -80,15 +85,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsCartOpen(true); // Open drawer on add
   };
 
-  const removeFromCart = (productId: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+  const removeFromCart = (cartItemId: string) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== cartItemId));
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (cartItemId: string, quantity: number) => {
     if (quantity < 1) return;
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+        item.id === cartItemId ? { ...item, quantity } : item
       )
     );
   };
