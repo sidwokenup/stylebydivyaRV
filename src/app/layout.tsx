@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  verification: {
+    google: "h7qL5JMLcGDJhcTQtCFjYQNxlzeSYTW3XOTBeJ9iu0Y",
+  },
   openGraph: {
     title: "StyleByDivya – Elegant & Modern Women's Fashion",
     description: "StyleByDivya offers premium women's fashion with modern elegance. Discover stylish outfits, designer collections, and timeless fashion crafted for confident women.",
