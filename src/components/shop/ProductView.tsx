@@ -10,6 +10,8 @@ import ProductAccordion from "@/components/ProductAccordion";
 import Link from "next/link";
 import AddToCartButton from "@/components/shop/AddToCartButton";
 import { calculateDiscount } from "@/lib/utils/calculateDiscount";
+import { ProductReviews } from "@/components/shop/ProductReviews";
+import { ReviewSubmissionModal } from "@/components/shop/ReviewSubmissionModal";
 
 // Company WhatsApp Number (International format without +)
 const WHATSAPP_NUMBER = "918708461553";
@@ -29,6 +31,8 @@ export default function ProductView({ product }: ProductViewProps) {
   // State for active image index
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [reviewRefreshTrigger, setReviewRefreshTrigger] = useState(0);
   
   // Measurement State
   const [measurements, setMeasurements] = useState({
@@ -631,8 +635,14 @@ export default function ProductView({ product }: ProductViewProps) {
                   </ProductAccordion>
                   
                   <ProductAccordion title="Reviews">
-                    <div className="py-4 text-center bg-gray-50 rounded">
-                      <p className="text-gray-500 italic text-xs">Reviews coming soon.</p>
+                    <div className="py-4 flex flex-col items-center justify-center bg-gray-50 rounded gap-3">
+                      <p className="text-gray-600 text-sm text-center">Have you purchased this product?</p>
+                      <button 
+                        onClick={() => setIsReviewModalOpen(true)}
+                        className="px-6 py-2 bg-gray-900 text-white text-xs font-medium uppercase tracking-widest rounded hover:bg-black transition-colors"
+                      >
+                        Write a Review
+                      </button>
                     </div>
                   </ProductAccordion>
 
@@ -645,6 +655,20 @@ export default function ProductView({ product }: ProductViewProps) {
 
           {/* Below Grid Sections */}
           <div className="mt-16 md:mt-24 border-t border-gray-200 pt-16 space-y-16">
+            
+            {/* Product Reviews Display */}
+            <ProductReviews productId={product.id} refreshTrigger={reviewRefreshTrigger} />
+
+            {/* Hidden Review Submission Modal */}
+            <ReviewSubmissionModal 
+              isOpen={isReviewModalOpen} 
+              onClose={() => setIsReviewModalOpen(false)} 
+              productId={product.id}
+              onSuccess={() => {
+                // Increment the trigger to cause ProductReviews to re-fetch seamlessly
+                setReviewRefreshTrigger(prev => prev + 1);
+              }}
+            />
             
             {/* Related Products */}
             {relatedProducts.length > 0 && (
