@@ -18,10 +18,10 @@ const COLLECTIONS = [
   },
   {
     id: 3,
-    title: "Saree Revival",
-    image: "/assets/Collec_crousel/saree_collec.png",
-    href: "/shop/saree-revival",
-    alt: "Saree Revival Collection Model",
+    title: "Couple Combos",
+    image: "/assets/Collec_crousel/couple_combo.jpg",
+    href: "/shop/couplecombo",
+    alt: "Couple Combos Collection Model",
   },
 ];
 
