@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,8 +8,10 @@ import Link from "next/link";
 const SLIDES = [
   {
     id: 3,
-    desktopVideo: "/assets/fts.mp4",
-    mobileVideo: "/assets/mo-fts.mp4",
+    desktopVideo: "/assets/fts_opt.mp4",
+    desktopPoster: "/assets/fts_poster.webp",
+    mobileVideo: "/assets/mo_fts_opt.mp4",
+    mobilePoster: "/assets/mo_fts_poster.webp",
     title: "New Arrivals",
     subtitle: "Indo-Western Collection",
     cta: "Explore New",
@@ -17,8 +19,8 @@ const SLIDES = [
   },
   {
     id: 1,
-    mobileImage: "/assets/Mobile_mainscreen_crousel/luxry_redeifned.jpeg",
-    desktopImage: "/assets/desktop_mainscreen_crousel/desk_lux_re.jpeg",
+    mobileImage: "/assets/Mobile_mainscreen_crousel/luxry_redeifned.webp",
+    desktopImage: "/assets/desktop_mainscreen_crousel/desk_lux_re.webp",
     title: "Luxury Redefined",
     subtitle: "Discover timeless elegance",
     cta: "Shop Now",
@@ -26,8 +28,8 @@ const SLIDES = [
   },
   {
     id: 2,
-    mobileImage: "/assets/Mobile_mainscreen_crousel/Flatoff.png",
-    desktopImage: "/assets/desktop_mainscreen_crousel/flat20.jpeg",
+    mobileImage: "/assets/Mobile_mainscreen_crousel/Flatoff.webp",
+    desktopImage: "/assets/desktop_mainscreen_crousel/flat20.webp",
     title: "Flat 20% Off",
     subtitle: "Limited time festive sale",
     cta: "View Offers",
@@ -38,27 +40,16 @@ const SLIDES = [
 export default function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
-  // Screen size detection
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Initial check
-    checkMobile();
-    
-    // Event listener
-    window.addEventListener("resize", checkMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Update active video when screen size changes
-  const activeVideoSrc = isMobile ? SLIDES[activeIndex].mobileVideo : SLIDES[activeIndex].desktopVideo;
+  const toggleMute = () => {
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    if (desktopVideoRef.current) desktopVideoRef.current.muted = nextMuted;
+    if (mobileVideoRef.current) mobileVideoRef.current.muted = nextMuted;
+  };
 
   const handleNext = useCallback(() => {
     setDirection(1);
@@ -74,8 +65,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     const currentSlide = SLIDES[activeIndex];
     
-    // If the current slide has a video, don't use setInterval.
-    // The video's onEnded event will handle the transition.
+    // If the current slide has a video, video onEnded will handle the transition
     if (currentSlide.desktopVideo || currentSlide.mobileVideo) {
       return;
     }
@@ -112,6 +102,9 @@ export default function HeroCarousel() {
     }),
   };
 
+  const currentSlide = SLIDES[activeIndex];
+  const isVideoSlide = Boolean(currentSlide.desktopVideo || currentSlide.mobileVideo);
+
   return (
     <section className="relative w-full h-[60vh] md:h-[75vh] bg-black overflow-hidden group">
       <AnimatePresence initial={false} custom={direction}>
@@ -134,19 +127,40 @@ export default function HeroCarousel() {
         >
           {/* Background Image/Video with Overlay */}
           <div className="absolute inset-0">
-            {SLIDES[activeIndex].desktopVideo || SLIDES[activeIndex].mobileVideo ? (
+            {isVideoSlide ? (
               <div className="absolute inset-0 w-full h-full overflow-hidden">
+                {/* Desktop Video */}
+                <div className="hidden md:block absolute inset-0 w-full h-full">
                   <video
-                    key={`${activeIndex}-${activeVideoSrc}`}
+                    ref={desktopVideoRef}
                     autoPlay
                     muted={isMuted}
                     playsInline
-                    preload="auto"
+                    preload="metadata"
+                    poster={currentSlide.desktopPoster}
                     onEnded={handleNext}
-                    className="absolute inset-0 w-full h-full object-cover scale-[1.15] pointer-events-none"
+                    className="w-full h-full object-cover scale-[1.15] pointer-events-none"
                   >
-                  <source src={activeVideoSrc} type="video/mp4" />
-                </video>
+                    <source src={currentSlide.desktopVideo} type="video/mp4" />
+                  </video>
+                </div>
+
+                {/* Mobile Video */}
+                <div className="block md:hidden absolute inset-0 w-full h-full">
+                  <video
+                    ref={mobileVideoRef}
+                    autoPlay
+                    muted={isMuted}
+                    playsInline
+                    preload="metadata"
+                    poster={currentSlide.mobilePoster}
+                    onEnded={handleNext}
+                    className="w-full h-full object-cover scale-[1.15] pointer-events-none"
+                  >
+                    <source src={currentSlide.mobileVideo} type="video/mp4" />
+                  </video>
+                </div>
+
                 {/* Shop Now Button for Video Banner */}
                 <div className="absolute inset-0 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 z-20 pointer-events-none">
                   <motion.div
@@ -156,7 +170,7 @@ export default function HeroCarousel() {
                     className="pointer-events-auto"
                   >
                     <Link href="/category/couple-combo">
-                      <button className="px-8 py-3 border border-[#D4AF37] bg-black/40 backdrop-blur-sm text-white font-medium uppercase tracking-widest text-sm hover:bg-[#D4AF37] hover:text-black transition-all duration-300 shadow-lg">
+                      <button className="px-8 py-3 border border-[#D4AF37] bg-black/40 backdrop-blur-sm text-white font-medium uppercase tracking-widest text-sm hover:bg-[#D4AF37] hover:text-black transition-all duration-300 shadow-lg cursor-pointer">
                         Shop Now
                       </button>
                     </Link>
@@ -167,7 +181,7 @@ export default function HeroCarousel() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setIsMuted(!isMuted);
+                    toggleMute();
                   }}
                   className="absolute bottom-12 right-6 md:bottom-8 md:right-8 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center text-white backdrop-blur-sm transition-colors border border-white/20 cursor-pointer pointer-events-auto"
                   aria-label={isMuted ? "Unmute video" : "Mute video"}
@@ -184,24 +198,38 @@ export default function HeroCarousel() {
                 </button>
               </div>
             ) : (
-              <Image
-                src={isMobile ? (SLIDES[activeIndex].mobileImage || "") : (SLIDES[activeIndex].desktopImage || "")}
-                alt={SLIDES[activeIndex].title}
-                fill
-                className="object-cover object-[center_20%] md:object-top pointer-events-none scale-125"
-                priority
-                sizes="(max-width: 768px) 100vw, 100vw"
-              />
+              <>
+                {/* Mobile Image */}
+                <div className="block md:hidden absolute inset-0 w-full h-full">
+                  <Image
+                    src={currentSlide.mobileImage || ""}
+                    alt={currentSlide.title}
+                    fill
+                    className="object-cover object-[center_20%] pointer-events-none scale-125"
+                    sizes="100vw"
+                  />
+                </div>
+                {/* Desktop Image */}
+                <div className="hidden md:block absolute inset-0 w-full h-full">
+                  <Image
+                    src={currentSlide.desktopImage || ""}
+                    alt={currentSlide.title}
+                    fill
+                    className="object-cover object-top pointer-events-none scale-125"
+                    sizes="100vw"
+                  />
+                </div>
+              </>
             )}
             
             {/* Fade Overlay only for images */}
-            {!(SLIDES[activeIndex].desktopVideo || SLIDES[activeIndex].mobileVideo) && (
+            {!isVideoSlide && (
               <div className="absolute inset-0 bg-black/40" />
             )}
           </div>
 
           {/* Centered Text Content only for images */}
-          {!(SLIDES[activeIndex].desktopVideo || SLIDES[activeIndex].mobileVideo) && (
+          {!isVideoSlide && (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
               <motion.h2
                 initial={{ y: 20, opacity: 0 }}
@@ -209,7 +237,7 @@ export default function HeroCarousel() {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="text-4xl md:text-6xl font-serif text-white mb-4 tracking-wider drop-shadow-lg"
               >
-                {SLIDES[activeIndex].title}
+                {currentSlide.title}
               </motion.h2>
               
               <motion.p
@@ -218,7 +246,7 @@ export default function HeroCarousel() {
                 transition={{ delay: 0.3, duration: 0.5 }}
                 className="text-base md:text-xl text-gray-200 mb-8 tracking-wide font-light drop-shadow-md"
               >
-                {SLIDES[activeIndex].subtitle}
+                {currentSlide.subtitle}
               </motion.p>
 
               <motion.div
@@ -226,9 +254,9 @@ export default function HeroCarousel() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
-                <Link href={SLIDES[activeIndex].link}>
-                  <button className="px-8 py-3 border border-[#D4AF37] text-white font-medium uppercase tracking-widest text-sm hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
-                    {SLIDES[activeIndex].cta}
+                <Link href={currentSlide.link}>
+                  <button className="px-8 py-3 border border-[#D4AF37] text-white font-medium uppercase tracking-widest text-sm hover:bg-[#D4AF37] hover:text-black transition-all duration-300 cursor-pointer">
+                    {currentSlide.cta}
                   </button>
                 </Link>
               </motion.div>
@@ -240,7 +268,7 @@ export default function HeroCarousel() {
       {/* Navigation Arrows (Desktop Only) */}
       <button
         onClick={handlePrev}
-        className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 duration-300"
+        className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 duration-300 cursor-pointer"
         aria-label="Previous slide"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -250,7 +278,7 @@ export default function HeroCarousel() {
 
       <button
         onClick={handleNext}
-        className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 duration-300"
+        className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 duration-300 cursor-pointer"
         aria-label="Next slide"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -267,7 +295,7 @@ export default function HeroCarousel() {
               setDirection(index > activeIndex ? 1 : -1);
               setActiveIndex(index);
             }}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
               index === activeIndex ? "bg-[#D4AF37] w-6" : "bg-white/50 hover:bg-white"
             }`}
             aria-label={`Go to slide ${index + 1}`}

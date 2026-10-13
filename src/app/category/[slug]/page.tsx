@@ -19,6 +19,12 @@ const CATEGORY_MAP: Record<string, string> = {
   "couple-combo": "Couple Combo",
 };
 
+export async function generateStaticParams() {
+  return Object.keys(CATEGORY_MAP).map((slug) => ({
+    slug,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
@@ -63,11 +69,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           {categoryName}
         </h1>
 
-        {/* Reusing ProductGrid but without the internal filter buttons since we are on a specific category page */}
-        {/* We can pass just the filtered products. The ProductGrid component currently has internal state for filtering. */}
-        {/* To make it cleaner, we might want to update ProductGrid to accept an initialCategory or hide filters if needed. */}
-        {/* For now, we will use the filtered list. The ProductGrid defaults to "All" of the passed products. */}
-        
         <ProductGrid products={filteredProducts} hideFilters={true} />
       </section>
 

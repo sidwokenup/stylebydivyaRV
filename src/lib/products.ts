@@ -43,8 +43,8 @@ export const products: Product[] = [
     price: 3599,
     description: "A divine wrap style ensemble featuring pearlescent tones and fluid draping.",
     images: [
-      "/assets/Products/Wrapstyles/Celestial Pearl/Cp1.png",
-      "/assets/Products/Wrapstyles/Celestial Pearl/Cp2.png",
+      "/assets/Products/Wrapstyles/Celestial Pearl/Cp1.webp",
+      "/assets/Products/Wrapstyles/Celestial Pearl/Cp2.webp",
       "/assets/Products/Wrapstyles/Celestial Pearl/Cp3.jpg",
       "/assets/Products/Wrapstyles/Celestial Pearl/Cp4.jpg"
     ],
@@ -87,7 +87,7 @@ export const products: Product[] = [
     images: [
       "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv1.jpg",
       "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv2.jpg",
-      "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv3.png",
+      "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv3.webp",
       "/assets/Products/Wrapstyles/Divya_s versatile Brown Wrap Dress/Dv4.jpg"
     ],
     type: "wrapstyle",
@@ -160,9 +160,9 @@ export const products: Product[] = [
     price: 1499,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
-      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc1.png",
-      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc2.png",
-      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc3.png",
+      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc1.webp",
+      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc2.webp",
+      "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc3.webp",
       "/assets/Products/Wrapstyles/The Nocturne Convertible Top/Nc4.jpg"
     ],
     type: "wrapstyle",
@@ -199,12 +199,12 @@ export const products: Product[] = [
     discount: 40,
     description: "Elegant free-size wrap dress crafted for modern luxury.",
     images: [
-      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac1.png",
+      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac1.webp",
       "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac2.jpg",
       "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac3.jpg",
-      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac4.png",
-      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac5.png",
-      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac6.png"
+      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac4.webp",
+      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac5.webp",
+      "/assets/Products/Wrapstyles/The Aria Cowl Top/Ac6.webp"
     ],
     type: "wrapstyle",
     freeSize: true,
@@ -277,8 +277,8 @@ export const products: Product[] = [
     price: 5999,
     description: "Revived from a vintage saree, Aabha brings traditional charm to contemporary fashion.",
     images: [
-      "/assets/Products/saree-revival/Aabha/A1.png",
-      "/assets/Products/saree-revival/Aabha/A2.png"
+      "/assets/Products/saree-revival/Aabha/A1.webp",
+      "/assets/Products/saree-revival/Aabha/A2.webp"
     ],
     type: "sareerevamp",
     freeSize: false,
@@ -312,8 +312,8 @@ export const products: Product[] = [
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
-      "/assets/Products/saree-revival/Noor-e-Ruhani/Noor1_.png",
-      "/assets/Products/saree-revival/Noor-e-Ruhani/Noor2.png"
+      "/assets/Products/saree-revival/Noor-e-Ruhani/Noor1_.webp",
+      "/assets/Products/saree-revival/Noor-e-Ruhani/Noor2.webp"
     ],
     type: "sareerevamp",
     freeSize: false,
@@ -347,10 +347,10 @@ export const products: Product[] = [
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
-      "/assets/Products/saree-revival/PhoolSaaz/Ps1.png",
-      "/assets/Products/saree-revival/PhoolSaaz/Ps2.png",
-      "/assets/Products/saree-revival/PhoolSaaz/Ps3.png",
-      "/assets/Products/saree-revival/PhoolSaaz/Ps4.png"
+      "/assets/Products/saree-revival/PhoolSaaz/Ps1.webp",
+      "/assets/Products/saree-revival/PhoolSaaz/Ps2.webp",
+      "/assets/Products/saree-revival/PhoolSaaz/Ps3.webp",
+      "/assets/Products/saree-revival/PhoolSaaz/Ps4.webp"
     ],
     type: "sareerevamp",
     freeSize: false,
@@ -384,10 +384,10 @@ export const products: Product[] = [
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
-      "/assets/Products/saree-revival/Revive Grace/Rg1.png",
-      "/assets/Products/saree-revival/Revive Grace/Rg2.png",
-      "/assets/Products/saree-revival/Revive Grace/Rg3.png",
-      "/assets/Products/saree-revival/Revive Grace/Rg4.png"
+      "/assets/Products/saree-revival/Revive Grace/Rg1.webp",
+      "/assets/Products/saree-revival/Revive Grace/Rg2.webp",
+      "/assets/Products/saree-revival/Revive Grace/Rg3.webp",
+      "/assets/Products/saree-revival/Revive Grace/Rg4.webp"
     ],
     type: "sareerevamp",
     freeSize: false,
@@ -421,10 +421,10 @@ export const products: Product[] = [
     price: 8999,
     description: "A spiritual glow captured in fabric, redesigned from heirloom textiles.",
     images: [
-      "/assets/Products/saree-revival/Viraasat Varnika/Vv1.png",
-      "/assets/Products/saree-revival/Viraasat Varnika/Vv2.png",
-      "/assets/Products/saree-revival/Viraasat Varnika/Vv3.png",
-      "/assets/Products/saree-revival/Viraasat Varnika/Vv4.png"
+      "/assets/Products/saree-revival/Viraasat Varnika/Vv1.webp",
+      "/assets/Products/saree-revival/Viraasat Varnika/Vv2.webp",
+      "/assets/Products/saree-revival/Viraasat Varnika/Vv3.webp",
+      "/assets/Products/saree-revival/Viraasat Varnika/Vv4.webp"
     ],
     type: "sareerevamp",
     freeSize: false,
@@ -574,11 +574,11 @@ export const products: Product[] = [
     images: [
       "/assets/Products/couplecombo/moonlightandmarineset/M_1.jpg",
       "/assets/Products/couplecombo/moonlightandmarineset/M_2.jpg",
-      "/assets/Products/couplecombo/moonlightandmarineset/M_3.png",
-      "/assets/Products/couplecombo/moonlightandmarineset/M_4.png",
-      "/assets/Products/couplecombo/moonlightandmarineset/M_5.png",
-      "/assets/Products/couplecombo/moonlightandmarineset/M_6.jpg",
-      "/assets/Products/couplecombo/moonlightandmarineset/M_7.png"
+      "/assets/Products/couplecombo/moonlightandmarineset/M_3.webp",
+      "/assets/Products/couplecombo/moonlightandmarineset/M_4.webp",
+      "/assets/Products/couplecombo/moonlightandmarineset/M_5.webp",
+      "/assets/Products/couplecombo/moonlightandmarineset/M_6.webp",
+      "/assets/Products/couplecombo/moonlightandmarineset/M_7.webp"
     ],
     type: "couplecombo",
     freeSize: false,

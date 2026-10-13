@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,8 +10,8 @@ import clsx from "clsx";
 interface CardData {
   id: number;
   title: string;
-  desktopSrc: any;
-  mobileSrc: any;
+  desktopSrc: string;
+  mobileSrc: string;
   alt: string;
 }
 
@@ -19,29 +19,29 @@ const CARDS: CardData[] = [
   {
     id: 0,
     title: "About",
-    desktopSrc: "/assets/Desktop About Section/desktop_about.png",
-    mobileSrc: "/assets/Mobile About Section/mobile_aboutcard.png",
+    desktopSrc: "/assets/Desktop About Section/desktop_about.webp",
+    mobileSrc: "/assets/Mobile About Section/mobile_aboutcard.webp",
     alt: "About StyleByDivya",
   },
   {
     id: 1,
     title: "Wrap Style",
-    desktopSrc: "/assets/Desktop About Section/desktop_wrapstyle.png",
-    mobileSrc: "/assets/Mobile About Section/mobile_wrapstyle.png",
+    desktopSrc: "/assets/Desktop About Section/desktop_wrapstyle.webp",
+    mobileSrc: "/assets/Mobile About Section/mobile_wrapstyle.webp",
     alt: "Wrap Style Collection",
   },
   {
     id: 2,
     title: "Indo-Western",
-    desktopSrc: "/assets/Desktop About Section/desktop_indowestern.png",
-    mobileSrc: "/assets/Mobile About Section/mobile_indowestern.png",
+    desktopSrc: "/assets/Desktop About Section/desktop_indowestern.webp",
+    mobileSrc: "/assets/Mobile About Section/mobile_indowestern.webp",
     alt: "Indo-Western Collection",
   },
   {
     id: 3,
     title: "Old Saree",
-    desktopSrc: "/assets/Desktop About Section/desktop_oldsaree.png",
-    mobileSrc: "/assets/Mobile About Section/mobile_oldsaree.png",
+    desktopSrc: "/assets/Desktop About Section/desktop_oldsaree.webp",
+    mobileSrc: "/assets/Mobile About Section/mobile_oldsaree.webp",
     alt: "Old Saree Revamp",
   },
 ];
@@ -49,17 +49,6 @@ const CARDS: CardData[] = [
 export default function AboutSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const handleNext = useCallback(() => {
     setDirection(1);
@@ -117,7 +106,7 @@ export default function AboutSection() {
           {/* Left Arrow (Desktop Only) */}
           <button
             onClick={handlePrev}
-            className="hidden md:flex absolute left-4 z-20 p-4 text-gray-800 hover:text-black transition-colors rounded-full hover:bg-gray-100"
+            className="hidden md:flex absolute left-4 z-20 p-4 text-gray-800 hover:text-black transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
             aria-label="Previous card"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -136,7 +125,7 @@ export default function AboutSection() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  x: { type: "tween", duration: 0.4, ease: "easeInOut" }, // Optimized for smoothness
+                  x: { type: "tween", duration: 0.4, ease: "easeInOut" },
                   opacity: { duration: 0.3 }
                 }}
                 drag="x"
@@ -146,21 +135,30 @@ export default function AboutSection() {
                 className="relative w-full flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden"
               >
                 <div className="relative w-full rounded-2xl shadow-xl bg-gray-50 overflow-hidden">
-                  {/* Image Rendering Logic */}
-                  <Image
-                    src={isMobile ? currentCard.mobileSrc : currentCard.desktopSrc}
-                    alt={currentCard.alt}
-                    width={1200}
-                    height={1600}
-                    className="w-full h-auto object-contain select-none pointer-events-none" // Prevent image dragging interference
-                    priority // Load active card immediately
-                    sizes="(max-width: 768px) 100vw, 80vw"
-                  />
-                  
-                  {/* Optional Title Overlay (if needed based on design, keeping minimal for now) */}
-                  {/* <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/50 to-transparent text-white">
-                    <h3 className="text-2xl font-light tracking-wide">{currentCard.title}</h3>
-                  </div> */}
+                  {/* Mobile Image */}
+                  <div className="block md:hidden">
+                    <Image
+                      src={currentCard.mobileSrc}
+                      alt={currentCard.alt}
+                      width={720}
+                      height={960}
+                      className="w-full h-auto object-contain select-none pointer-events-none"
+                      loading="lazy"
+                      sizes="100vw"
+                    />
+                  </div>
+                  {/* Desktop Image */}
+                  <div className="hidden md:block">
+                    <Image
+                      src={currentCard.desktopSrc}
+                      alt={currentCard.alt}
+                      width={1200}
+                      height={1600}
+                      className="w-full h-auto object-contain select-none pointer-events-none"
+                      loading="lazy"
+                      sizes="80vw"
+                    />
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -169,7 +167,7 @@ export default function AboutSection() {
           {/* Right Arrow (Desktop Only) */}
           <button
             onClick={handleNext}
-            className="hidden md:flex absolute right-4 z-20 p-4 text-gray-800 hover:text-black transition-colors rounded-full hover:bg-gray-100"
+            className="hidden md:flex absolute right-4 z-20 p-4 text-gray-800 hover:text-black transition-colors rounded-full hover:bg-gray-100 cursor-pointer"
             aria-label="Next card"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -179,7 +177,7 @@ export default function AboutSection() {
 
         </div>
 
-        {/* Navigation Dots (Optional for better UX on mobile) */}
+        {/* Navigation Dots */}
         <div className="flex gap-2 justify-center mt-4">
           {CARDS.map((_, index) => (
             <button
@@ -189,7 +187,7 @@ export default function AboutSection() {
                 setActiveIndex(index);
               }}
               className={clsx(
-                "w-2 h-2 rounded-full transition-all duration-300",
+                "w-2 h-2 rounded-full transition-all duration-300 cursor-pointer",
                 index === activeIndex ? "bg-black w-6" : "bg-gray-300 hover:bg-gray-400"
               )}
               aria-label={`Go to slide ${index + 1}`}
@@ -204,7 +202,7 @@ export default function AboutSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="group relative overflow-hidden px-10 py-3 bg-black text-white font-medium tracking-widest uppercase text-sm hover:bg-gray-900 transition-colors duration-300 shadow-lg"
+              className="group relative overflow-hidden px-10 py-3 bg-black text-white font-medium tracking-widest uppercase text-sm hover:bg-gray-900 transition-colors duration-300 shadow-lg cursor-pointer"
             >
               <span className="relative z-10">Shop Now</span>
             </motion.button>

@@ -14,12 +14,12 @@ export default function CustomDressSection() {
           {/* Left Side: Visual */}
           <div className="relative h-[500px] md:h-[600px] w-full rounded-lg overflow-hidden shadow-xl group order-2 lg:order-1">
             <Image
-              src="/assets/Dream/Dreams.png"
+              src="/assets/Dream/Dreams.webp"
               alt="Fashion Design Sketching"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-500"></div>
           </div>

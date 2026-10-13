@@ -5,21 +5,21 @@ const COLLECTIONS = [
   {
     id: 1,
     title: "Wrap Style",
-    image: "/assets/Collec_crousel/wrap_collec.png",
+    image: "/assets/Collec_crousel/wrap_collec.webp",
     href: "/shop/wrapstyles",
     alt: "Wrap Style Collection Model",
   },
   {
     id: 2,
     title: "Indo-Western",
-    image: "/assets/Collec_crousel/Indo-western_collec.png",
+    image: "/assets/Collec_crousel/Indo-western_collec.webp",
     href: "/shop/indo-western",
     alt: "Indo-Western Collection Model",
   },
   {
     id: 3,
     title: "Couple Combos",
-    image: "/assets/Collec_crousel/couple_combo.jpg",
+    image: "/assets/Collec_crousel/couple_combo.webp",
     href: "/shop/couplecombo",
     alt: "Couple Combos Collection Model",
   },
@@ -69,7 +69,7 @@ export default function CollectionSection() {
                   fill
                   className="object-contain object-bottom transition-transform duration-700 md:group-hover:scale-105"
                   sizes="(max-width: 768px) 85vw, 33vw"
-                  priority // Load all collection images immediately
+                  loading="lazy"
                 />
                 
                 {/* Mobile Title Overlay - LUXURY GOLD UPDATE */}

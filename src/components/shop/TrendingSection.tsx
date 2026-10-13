@@ -4,7 +4,6 @@ import { products } from "@/lib/products";
 import { calculateDiscount } from "@/lib/utils/calculateDiscount";
 
 // Select specific products for the Trending section
-// We can use IDs to pick exactly which ones we want
 const TRENDING_IDS = [
   "celestial-pearl",
   "aabha",
@@ -56,7 +55,7 @@ export default function TrendingSection() {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 640px) 70vw, (max-width: 768px) 50vw, 25vw"
-                    priority
+                    loading="lazy"
                   />
                 </div>
 

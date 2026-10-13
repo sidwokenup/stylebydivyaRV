@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProduct } from "@/lib/products";
+import { getProduct, products } from "@/lib/products";
 import ProductView from "@/components/shop/ProductView";
 import { Metadata } from "next";
 import { SEO } from "@/lib/seo";
@@ -11,6 +11,13 @@ interface ProductPageProps {
     collection?: string;
     product?: string;
   }>;
+}
+
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    collection: product.collection.toLowerCase(),
+    product: product.id,
+  }));
 }
 
 export async function generateMetadata({

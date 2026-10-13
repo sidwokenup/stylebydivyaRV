@@ -11,6 +11,15 @@ interface CollectionPageProps {
   }>;
 }
 
+export async function generateStaticParams() {
+  const availableCollections = [
+    ...new Set(products.map((p) => p.collection.toLowerCase())),
+  ];
+  return availableCollections.map((collection) => ({
+    collection,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: CollectionPageProps): Promise<Metadata> {
